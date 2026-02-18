@@ -18,7 +18,7 @@
    Have everything in this structure that will be needed by the function integrate.
 */
 typedef struct{
-  char name[20];
+  char name[35];
   int n;
   double xk[9999], wk[9999];
   /* Name of the quadrature formula. */

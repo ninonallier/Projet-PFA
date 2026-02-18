@@ -14,6 +14,7 @@ bool setQuadFormula(QuadFormula* qf, char* name)
 		qf-> n=0;
 		qf-> wk[0]=1.0;
 		qf-> xk[0]=0.0;
+		return true;
 	}
 	else if(strcmp(name, "right")==0)
 	{
@@ -21,6 +22,7 @@ bool setQuadFormula(QuadFormula* qf, char* name)
 		qf-> n=0;
 		qf-> wk[0]=1.0;
 		qf-> xk[0]=1.0;
+		return true;
 	}
 	else if(strcmp(name, "middle")==0)
 	{
@@ -28,31 +30,35 @@ bool setQuadFormula(QuadFormula* qf, char* name)
 		qf-> n=0;
 		qf-> wk[0]=1.0;
 		qf-> xk[0]=0.5;
+		return true;
 	}
 	else if(strcmp(name, "trapezes")==0)
 	{
-		strcpy(qf-> name,"trapezes");
+		strcpy(name,"trapezes");
 		qf-> n=1;
 		qf-> wk[0]=1.0/2.0;
 		qf->wk[1]=1.0/2.0;
 		qf-> xk[0]=0.0;
 		qf-> xk[1] = 1.0;
+		return true;
 	}
 	else if(strcmp(name, "simpson")==0)
 	{
 		strcpy(qf-> name,"simpson");
+		return true;
 	}
 	else if(strcmp(name, "gauss2")==0)
 	{
 		strcpy(qf-> name,"gauss2");
+		return true;
 	}
 	else if(strcmp(name, "gauss3")==0)
 	{
 		strcpy(qf-> name,"gauss3");
+		return true;
 	}
 	else
 		return false;
-	return true;
 }
 
 /* This function is not required ,but it may useful to debug */
@@ -78,11 +84,16 @@ double integrate(double (*f)(double), double a, double b, int N, QuadFormula* qf
 	{
 		ai = a + (i*((b-a)/N));
 		bi = a + ((i+1)*((b-a)/N));
-		printf("test\n");
+		printf("test premiere boucle\n");
 		for(int j = 0; j<=(qf->n); j++)
+		{
 			sum += (bi-ai) * (qf->wk[j]) * f(ai + ((qf->xk[j]) * (bi-ai)));
-			printf("%lf \n", sum);
+			printf("%lf | %i\n", sum, j);
+			printf("test deuxieme boucle\n");
+		}
+		printf("test fin de boucle\n");
 	}
+	printf("test fin\n");
 	return sum;
 
 }
