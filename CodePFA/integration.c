@@ -34,7 +34,7 @@ bool setQuadFormula(QuadFormula* qf, char* name)
 	}
 	else if(strcmp(name, "trapezes")==0)
 	{
-		strcpy(name,"trapezes");
+		strcpy(qf->name,"trapezes");
 		qf-> n=1;
 		qf-> wk[0]=1.0/2.0;
 		qf->wk[1]=1.0/2.0;
@@ -45,16 +45,38 @@ bool setQuadFormula(QuadFormula* qf, char* name)
 	else if(strcmp(name, "simpson")==0)
 	{
 		strcpy(qf-> name,"simpson");
+		qf->n = 2;
+    		qf->wk[0] = 1.0/6.0;
+    		qf->wk[1] = 4.0/6.0;
+    		qf->wk[2] = 1.0/6.0;
+		qf->xk[0] = 0.0;
+    		qf->xk[1] = 0.5;
+    		qf->xk[2] = 1.0;
 		return true;
 	}
 	else if(strcmp(name, "gauss2")==0)
 	{
 		strcpy(qf-> name,"gauss2");
+		qf->n = 1;
+		double r = sqrt(3.0)/6.0;
+		qf->wk[0] = 1.0/2.0;
+		qf->wk[1] = 1.0/2.0;
+		qf->xk[0] = 1.0/2.0 - r;
+		qf->xk[1] = 1.0/2.0 + r;
+
 		return true;
 	}
 	else if(strcmp(name, "gauss3")==0)
 	{
 		strcpy(qf-> name,"gauss3");
+		qf->n = 2;
+		double r = sqrt(15.0)/10.0;
+		qf->wk[0] = 5.0/18.0;
+		qf->wk[1] = 8.0/18.0;
+		qf->wk[2] = 5.0/18.0;
+		qf->xk[0] = 1.0/2.0 - r;
+		qf->xk[1] = 1.0/2.0;
+		qf->xk[2] = 1.0/2.0 + r;
 		return true;
 	}
 	else
@@ -84,23 +106,18 @@ double integrate(double (*f)(double), double a, double b, int N, QuadFormula* qf
 	{
 		ai = a + (i*((b-a)/N));
 		bi = a + ((i+1)*((b-a)/N));
-		printf("test premiere boucle\n");
 		for(int j = 0; j<=(qf->n); j++)
 		{
 			sum += (bi-ai) * (qf->wk[j]) * f(ai + ((qf->xk[j]) * (bi-ai)));
-			printf("%lf | %i\n", sum, j);
-			printf("test deuxieme boucle\n");
 		}
-		printf("test fin de boucle\n");
 	}
-	printf("test fin\n");
 	return sum;
 
 }
 
 double integrate_dx(double (*f)(double), double a, double b, double dx, QuadFormula* qf)
 {
-  return 0.0;
+	return 0.0;
 }
 
 
