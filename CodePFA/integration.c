@@ -22,7 +22,7 @@ bool setQuadFormula(QuadFormula* qf, char* name)
 		qf-> n=0;
 		qf-> wk[0]=1.0;
 		qf-> xk[0]=1.0;
-		return true;
+			return true;
 	}
 	else if(strcmp(name, "middle")==0)
 	{
@@ -50,7 +50,7 @@ bool setQuadFormula(QuadFormula* qf, char* name)
     		qf->wk[1] = 4.0/6.0;
     		qf->wk[2] = 1.0/6.0;
 		qf->xk[0] = 0.0;
-    		qf->xk[1] = 0.5;
+    		qf->xk[1] = 1.0/2.0;
     		qf->xk[2] = 1.0;
 		return true;
 	}
@@ -117,7 +117,10 @@ double integrate(double (*f)(double), double a, double b, int N, QuadFormula* qf
 
 double integrate_dx(double (*f)(double), double a, double b, double dx, QuadFormula* qf)
 {
-	return 0.0;
+	int N = (int) round( abs(b-a)/dx );
+	if(N <= 0)
+		N = 1;
+	return integrate(f, a, b, N, qf);
 }
 
 
